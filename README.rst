@@ -7,7 +7,8 @@ with Riverbed solutions and appliances, and other network infrastructure devices
 Quick Start 
 -----------
 
-If you have git and Docker installed.
+If you have git and Docker installed,
+
 Open your shell (bash or PowerShell), build SteelScript from the latest source code and run it locally in a Docker container as follows:
 
 .. code:: shell
@@ -31,13 +32,13 @@ Get the licenses and services of a Client Accelerator Controller appliance:
 
 .. code:: shell
    
-   python examples/cacontroller-examples/cacontroller-rest_api.py {client accelerator controller fqdn or IP address} --access_code {access_code}
+  python examples/cacontroller-examples/cacontroller-rest_api.py {client accelerator controller fqdn or IP address} --access_code {access_code}
 
 List the devices from NetIM Core:
 
 .. code:: shell
    
-   python examples/netim-examples/print-netim-devices-raw.py {netim core fqdn or IP address} --username {account} --password {password}
+  python examples/netim-examples/print-netim-devices-raw.py {netim core fqdn or IP address} --username {account} --password {password}
 
 
 Contribute
@@ -182,7 +183,7 @@ Notebook
 
   docker build --tag steelscript.notebook -f Dockerfile.notebook .
 
-Dev
+Dev from master
 
 .. code:: shell
 
@@ -198,6 +199,24 @@ Dev
   git clone https://github.com/riverbed/steelscript-packets.git --depth 1 --recurse-submodules
 
   docker build --tag steelscript.dev --progress=plain -f steelscript/Dockerfile.dev .
+
+Dev from fork
+
+.. code:: shell
+
+  git clone https://github.com/your_fork/steelscript --depth 1 --recurse-submodules -b your_branch
+  git clone https://github.com/your_fork/steelscript-netprofiler --depth 1 --recurse-submodules -b your_branch
+  git clone https://github.com/your_fork/steelscript-wireshark --depth 1 --recurse-submodules -b your_branch
+  git clone https://github.com/your_fork/steelscript-cmdline --depth 1 --recurse-submodules -b your_branch
+  git clone https://github.com/your_fork/steelscript-scc --depth 1 --recurse-submodules -b your_branch
+  git clone https://github.com/your_fork/steelscript-appresponse --depth 1 --recurse-submodules -b your_branch
+  git clone https://github.com/your_fork/steelscript-netim --depth 1 --recurse-submodules -b your_branch
+  git clone https://github.com/your_fork/steelscript-client-accelerator-controller --depth 1 --recurse-submodules -b your_branch
+  git clone https://github.com/your_fork/steelscript-steelhead --depth 1 --recurse-submodules -b your_branch
+  git clone https://github.com/your_fork/steelscript-packets.git --depth 1 --recurse-submodules -b your_branch
+
+  docker build --tag steelscript.dev --progress=plain -f steelscript/Dockerfile.dev .
+
 
 Distribution
 ------------
