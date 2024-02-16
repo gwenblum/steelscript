@@ -43,5 +43,4 @@ RUN set -ex \
 
 WORKDIR /root/steelscript-workspace
 
-# Configure container startup
 CMD ["/bin/bash"]
