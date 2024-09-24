@@ -10,7 +10,7 @@ RUN set -ex \
         && apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
         \
         && pip install --src /src \
-            -e git+https://github.com/riverbed/steelscript#egg=steelscript \
+            -e git+https://github.com/gwenblum/steelscript@2409-fix-pkg#egg=steelscript \
             -e git+https://github.com/riverbed/steelscript-netprofiler#egg=steelscript-netprofiler \
             -e git+https://github.com/riverbed/steelscript-wireshark#egg=steelscript-wireshark \
             -e git+https://github.com/riverbed/steelscript-cmdline#egg=steelscript-cmdline \
