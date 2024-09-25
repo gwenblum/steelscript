@@ -14,7 +14,7 @@ RUN set -ex \
         \
         && pip install setuptools \
         && pip install --src /src \
-            -e git+https://github.com/riverbed/steelscript#egg=steelscript \
+            -e git+https://github.com/gwenblum/steelscript@2409-patch4n2#egg=steelscript \
             -e git+https://github.com/riverbed/steelscript-netprofiler#egg=steelscript-netprofiler \
             -e git+https://github.com/riverbed/steelscript-wireshark#egg=steelscript-wireshark \
             -e git+https://github.com/riverbed/steelscript-cmdline#egg=steelscript-cmdline \
