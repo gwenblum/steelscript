@@ -1,6 +1,7 @@
 # Riverbed SteelScript
 
 [![Documentation Status](https://readthedocs.org/projects/steelscript/badge/?version=latest)](https://steelscript.readthedocs.io/en/latest/?badge=latest)
+[![Image scan](https://github.com/gwenblum/steelscript/actions/workflows/anchore-image-scan.yml/badge.svg)](https://github.com/gwenblum/steelscript/actions/workflows/anchore-image-scan.yml)
 
 Riverbed SteelScript is a collection of libraries and scripts written in Python for interacting with Riverbed solutions and appliances, and other network infrastructure devices.
 
