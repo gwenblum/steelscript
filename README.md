@@ -255,32 +255,40 @@ Execute test-plans with tox
 
 Some Dockerfile are provided to build different flavors of the SteelScript container image:
 
-- Dockerfile: standard build
-- Dockerfile.slim: optimized build
-- Dockerfile.notebook: build for demo and learning with Notebooks
+- Dockerfile: script practice build, with all CLI. Might not pass high security scans.
+- Dockerfile.notebook: build for demo and learning with Notebooks. Might not pass high security scans.
+- Dockerfile.slim: small build just enough to run steelscript. Should pass security scans.
+- Dockerfile.alpine: optimized build, ideal to use as a base image for workload and custom. Should pass security scans.
 - Dockerfile.dev: build development and testing container from master or fork/branch
 
 
 <details>
   <summary>Build snippets</summary>
 
-##### Standard:
+##### Scripts Practice (~1.1 GB)
 
 ```shell
   docker build --tag steelscript -f Dockerfile .
 ```  
 
-##### Slim:
+##### Notebook (~1.4 GB)
+
+```shell
+  docker build --tag steelscript.notebook -f Dockerfile.notebook .
+```
+
+##### Slim (~250 MB)
 
 ```shell
   docker build --tag steelscript.slim -f Dockerfile.slim .
 ```  
 
-##### Notebook
+##### Optimized (<180 MB)
 
 ```shell
-  docker build --tag steelscript.notebook -f Dockerfile.notebook .
-```
+  docker build --tag steelscript.alpine -f Dockerfile.alpine .
+```  
+
 
 </details>
 
