@@ -6,8 +6,8 @@ FROM python:3.13
 LABEL org.opencontainers.image.authors="Riverbed Community"
 LABEL org.opencontainers.image.source="https://github.com/riverbed/steelscript"
 
-# Install tools and deps for build
 RUN set -ex && \
+        # Install tools and deps for build
         tools=' \
                 git \
         ' && \
@@ -17,25 +17,21 @@ RUN set -ex && \
         apt-get update && \ 
         apt-get upgrade -y && \ 
         apt-get install -y $tools $buildDeps --no-install-recommends && \
-        rm -rf /var/lib/apt/lists/* 
-
-# Install SteelScript and modules        
-RUN set -ex && \           
+        rm -rf /var/lib/apt/lists/* && \
+        # Install SteelScript and modules        
         pip install --no-cache-dir --upgrade pip && \
         pip install --no-cache-dir --src /src \
-            -e git+https://github.com/riverbed/steelscript#egg=steelscript \
-            -e git+https://github.com/riverbed/steelscript-netprofiler#egg=steelscript-netprofiler \
-            -e git+https://github.com/riverbed/steelscript-wireshark#egg=steelscript-wireshark \
-            -e git+https://github.com/riverbed/steelscript-cmdline#egg=steelscript-cmdline \
-            -e git+https://github.com/riverbed/steelscript-scc#egg=steelscript-scc \
-            -e git+https://github.com/riverbed/steelscript-appresponse#egg=steelscript-appresponse \
-            -e git+https://github.com/riverbed/steelscript-netim.git#egg=steelscript-netim \
-            -e git+https://github.com/riverbed/steelscript-client-accelerator-controller#egg=steelscript-cacontroller \
-            -e git+https://github.com/riverbed/steelscript-steelhead#egg=steelscript-steelhead \
-            -e git+https://github.com/riverbed/steelscript-packets.git@master#egg=steelscript-packets
-
-# Cleanup, purging build deps
-RUN set -ex && \
+        -e git+https://github.com/riverbed/steelscript#egg=steelscript \
+        -e git+https://github.com/riverbed/steelscript-netprofiler#egg=steelscript-netprofiler \
+        -e git+https://github.com/riverbed/steelscript-wireshark#egg=steelscript-wireshark \
+        -e git+https://github.com/riverbed/steelscript-cmdline#egg=steelscript-cmdline \
+        -e git+https://github.com/riverbed/steelscript-scc#egg=steelscript-scc \
+        -e git+https://github.com/riverbed/steelscript-appresponse#egg=steelscript-appresponse \
+        -e git+https://github.com/riverbed/steelscript-netim.git#egg=steelscript-netim \
+        -e git+https://github.com/riverbed/steelscript-client-accelerator-controller#egg=steelscript-cacontroller \
+        -e git+https://github.com/riverbed/steelscript-steelhead#egg=steelscript-steelhead \
+        -e git+https://github.com/riverbed/steelscript-packets.git@master#egg=steelscript-packets && \
+        # Cleanup, purging build deps
         distroExtra=' \
                 gcc \
         ' && \                
