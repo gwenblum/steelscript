@@ -1,17 +1,24 @@
 # Dockerfile
-# version: 24.9.1
+# version: 24.10.31
 
-FROM python:3.12
+# Use Python iamge full version
+FROM python:3.13
 LABEL org.opencontainers.image.authors="Riverbed Community"
 LABEL org.opencontainers.image.source="https://github.com/riverbed/steelscript"
 
-# separate out steelhead package to it picks up already installed dependencies
+# Install tools and deps for build
 RUN set -ex \
+        && tools=' \
+                git \
+        ' \
         && buildDeps=' \
                 libpcap-dev \
         ' \
-        && apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
-        \
+        && apt-get update && apt-get install -y $tools $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* 
+
+# Install SteelScript and modules        
+RUN set -ex \           
+        && pip install --no-cache-dir --upgrade pip \
         && pip install --src /src \
             -e git+https://github.com/riverbed/steelscript#egg=steelscript \
             -e git+https://github.com/riverbed/steelscript-netprofiler#egg=steelscript-netprofiler \
@@ -21,17 +28,28 @@ RUN set -ex \
             -e git+https://github.com/riverbed/steelscript-appresponse#egg=steelscript-appresponse \
             -e git+https://github.com/riverbed/steelscript-netim.git#egg=steelscript-netim \
             -e git+https://github.com/riverbed/steelscript-client-accelerator-controller#egg=steelscript-cacontroller \
-        && pip install Cython \
-        && pip install --src /src \
             -e git+https://github.com/riverbed/steelscript-steelhead#egg=steelscript-steelhead \
-            -e git+https://github.com/riverbed/steelscript-packets.git@master#egg=steelscript-packets \
-        && rm -f /src/pip-delete-this-directory.txt \
+            -e git+https://github.com/riverbed/steelscript-packets.git@master#egg=steelscript-packets
+
+# Cleanup, purging build deps
+RUN set -ex \
+        && distroExtra=' \
+                python3.11 \
+                gcc \
+        ' \                
+        && apt-get remove -y --purge --autoremove $buildDeps $distroExtra \
         && rm -rf ~/.cache
 
-RUN set -ex \
-        && steel mkworkspace -d /root/steelscript-workspace
+# Create a non-root user and group
+ARG USERNAME=steelscript
+ARG GROUPNAME=$USERNAME
+ARG USER_ID=1000
+ARG GROUP_ID=$USER_ID
+RUN groupadd --gid $GROUP_ID $GROUPNAME && useradd --create-home --gid $GROUP_ID --uid $USER_ID $USERNAME
 
-WORKDIR /root/steelscript-workspace
+# Create SteelScript workspace
+RUN set -ex && steel mkworkspace -d /home/steelscript/workspace
+WORKDIR /root/steelscript/workspace
 
 # Configure container startup
 CMD ["/bin/bash"]

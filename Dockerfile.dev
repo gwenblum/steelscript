@@ -1,7 +1,7 @@
 # Dockerfile.dev
-# version: 24.9.1
+# version: 24.10.31
 
-FROM python:3.12
+FROM python:3.13
 LABEL org.opencontainers.image.authors="Riverbed Community"
 LABEL org.opencontainers.image.source="https://github.com/riverbed/steelscript"
 
@@ -34,12 +34,8 @@ RUN set -ex \
             -e /src-dev/steelscript-appresponse \
             -e /src-dev/steelscript-netim \
             -e /src-dev/steelscript-client-accelerator-controller \
-        && pip install Cython \
-        && pip install --src /src \
             -e /src-dev/steelscript-steelhead \
-            -e /src-dev/steelscript-packets \
-        && rm -f /src/pip-delete-this-directory.txt \
-        && rm -rf ~/.cache
+            -e /src-dev/steelscript-packets
 
 RUN set -ex \
         && steel mkworkspace -d /root/steelscript-workspace
