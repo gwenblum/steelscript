@@ -1,4 +1,5 @@
-name: Anchore scan
+name: Anchore images scan
+# see extra configuration rule in /.grype.yaml
 
 on: [push, pull_request]
 
