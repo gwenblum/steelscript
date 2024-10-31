@@ -2,7 +2,7 @@
 # version: 24.10.31
 
 # Use Python iamge full version
-FROM python:3.13-bullseye
+FROM python:3.13
 LABEL org.opencontainers.image.authors="Riverbed Community"
 LABEL org.opencontainers.image.source="https://github.com/riverbed/steelscript"
 
