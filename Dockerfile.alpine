@@ -1,5 +1,10 @@
 # Dockerfile.alpine
 # version: 24.10.31
+#
+# Usage
+#   
+#   # Build
+#   docker build --tag steelscript.alpine:latest -f Dockerfile.alpine .
 
 # Use Python image alpine version
 FROM python:3.13-alpine
