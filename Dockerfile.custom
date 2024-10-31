@@ -1,0 +1,19 @@
+# Dockerfile.custom
+# version: 24.10.31
+#
+# Usage
+#
+#   # Build the SteelScript Optimized image
+#   docker build --tag steelscript.alpine:latest -f Dockerfile.alpine .
+#   
+#   # Build your SteelScript custom image
+#   docker build --tag steelscript.your_custom_workload -f Dockerfile.custom .
+
+FROM steelscript.alpine:latest
+LABEL org.opencontainers.image.authors="Riverbed Community"
+LABEL org.opencontainers.image.source="https://github.com/riverbed/steelscript"
+
+COPY *.py .
+
+# TODO: set the correct name of your script
+CMD ["python", "your_script.py"]
