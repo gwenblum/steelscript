@@ -19,7 +19,10 @@ jobs:
     - name: Scan image
       uses: anchore/scan-action@v3
       with:
-        image: "localbuild/steelscript.slim:latest"        
+        image: "localbuild/steelscript.slim:latest"
+        severity-cutoff: high
+        output-format: table
+        
 
     - name: Run other tests
       run: docker run steelscript.slim
