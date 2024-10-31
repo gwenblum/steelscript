@@ -13,26 +13,39 @@ jobs:
     - name: Docker Setup Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Build Docker image
-      run:  docker build --tag localbuild/steelscript:latest -f Dockerfile .
-   
-    - name: Scan image
+    - name: Scan image SteelScript base image
       uses: anchore/scan-action@v3
       with:
-        image: "localbuild/steelscript:latest"
+        image: "python:3.13-slim"
         severity-cutoff: critical
         output-format: table      
 
-    - name: Build Docker image
+    - name: Scan image SteelScript base image
+      uses: anchore/scan-action@v3
+      with:
+        image: "python:3.13"
+        severity-cutoff: critical
+        output-format: table      
+
+    - name: Build Docker image SteelScript SLIM
       run:  docker build --tag localbuild/steelscript.slim:latest -f Dockerfile.slim .
    
-    - name: Scan image
+    - name: Scan image SteelScript SLIM
       uses: anchore/scan-action@v3
       with:
         image: "localbuild/steelscript.slim:latest"
         severity-cutoff: critical
         output-format: table
-        
+
+    - name: Build Docker image SteelScript
+      run:  docker build --tag localbuild/steelscript:latest -f Dockerfile .
+   
+    - name: Scan image SteelScript
+      uses: anchore/scan-action@v3
+      with:
+        image: "localbuild/steelscript:latest"
+        severity-cutoff: critical
+        output-format: table              
 
     - name: Run other tests
       run: docker run steelscript.slim
