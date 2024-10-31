@@ -14,13 +14,23 @@ jobs:
       uses: docker/setup-buildx-action@v3
 
     - name: Build Docker image
+      run:  docker build --tag localbuild/steelscript:latest -f Dockerfile .
+   
+    - name: Scan image
+      uses: anchore/scan-action@v3
+      with:
+        image: "localbuild/steelscript:latest"
+        severity-cutoff: critical
+        output-format: table      
+
+    - name: Build Docker image
       run:  docker build --tag localbuild/steelscript.slim:latest -f Dockerfile.slim .
    
     - name: Scan image
       uses: anchore/scan-action@v3
       with:
         image: "localbuild/steelscript.slim:latest"
-        severity-cutoff: high
+        severity-cutoff: critical
         output-format: table
         
 
