@@ -7,19 +7,22 @@ LABEL org.opencontainers.image.authors="Riverbed Community"
 LABEL org.opencontainers.image.source="https://github.com/riverbed/steelscript"
 
 # Install tools and deps for build
-RUN set -ex \
-        && tools=' \
+RUN set -ex && \
+        tools=' \
                 git \
-        ' \
-        && buildDeps=' \
+        ' && \
+        buildDeps=' \
                 libpcap-dev \
-        ' \
-        && apt-get update && apt-get install -y $tools $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* 
+        ' && \
+        apt-get update && \ 
+        apt-get upgrade -y && \ 
+        apt-get install -y $tools $buildDeps --no-install-recommends && \
+        rm -rf /var/lib/apt/lists/* 
 
 # Install SteelScript and modules        
-RUN set -ex \           
-        && pip install --no-cache-dir --upgrade pip \
-        && pip install --src /src \
+RUN set -ex && \           
+        pip install --no-cache-dir --upgrade pip && \
+        pip install --no-cache-dir --src /src \
             -e git+https://github.com/riverbed/steelscript#egg=steelscript \
             -e git+https://github.com/riverbed/steelscript-netprofiler#egg=steelscript-netprofiler \
             -e git+https://github.com/riverbed/steelscript-wireshark#egg=steelscript-wireshark \
@@ -32,13 +35,14 @@ RUN set -ex \
             -e git+https://github.com/riverbed/steelscript-packets.git@master#egg=steelscript-packets
 
 # Cleanup, purging build deps
-RUN set -ex \
-        && distroExtra=' \
+RUN set -ex && \
+        distroExtra=' \
                 python3.11 \
                 gcc \
-        ' \                
-        && apt-get remove -y --purge --autoremove $buildDeps $distroExtra \
-        && rm -rf ~/.cache
+        ' && \                
+        apt-get remove -y --purge --autoremove $buildDeps $distroExtra && \
+        apt-get clean && \
+        rm -rf ~/.cache
 
 # Create a non-root user and group
 ARG USERNAME=steelscript
