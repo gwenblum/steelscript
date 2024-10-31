@@ -1,4 +1,4 @@
-name: image
+name: images
 # see extra configuration rule in /.grype.yaml
 
 on: [push]
