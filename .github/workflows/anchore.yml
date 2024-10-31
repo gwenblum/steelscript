@@ -1,7 +1,7 @@
-name: Image
+name: image
 # see extra configuration rule in /.grype.yaml
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
