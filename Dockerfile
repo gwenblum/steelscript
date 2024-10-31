@@ -2,7 +2,7 @@
 # version: 24.10.31
 
 # Use Python iamge full version
-FROM python:3.13
+FROM python:3.13-bullseye
 LABEL org.opencontainers.image.authors="Riverbed Community"
 LABEL org.opencontainers.image.source="https://github.com/riverbed/steelscript"
 
@@ -37,10 +37,10 @@ RUN set -ex && \
 # Cleanup, purging build deps
 RUN set -ex && \
         distroExtra=' \
-                python3.11 \
                 gcc \
         ' && \                
         apt-get remove -y --purge --autoremove $buildDeps $distroExtra && \
+        apt-get autoremove && \
         apt-get clean && \
         rm -rf ~/.cache
 
