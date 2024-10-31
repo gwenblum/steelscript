@@ -14,10 +14,10 @@ jobs:
     - name: Docker Setup Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Build image SteelScript Optimized (Dockerfile.alpine)
-      run:  docker build --tag localbuild/steelscript.alpine:latest -f Dockerfile.slim .
+    - name: Build image SteelScript optimized (Dockerfile.alpine)
+      run:  docker build --tag localbuild/steelscript.alpine:latest -f Dockerfile.alpine .
    
-    - name: Scan image SteelScript Optimized (Dockerfile.alpine)
+    - name: Scan image SteelScript optimized (Dockerfile.alpine)
       uses: anchore/scan-action@v3
       with:
         image: "localbuild/steelscript.alpine:latest"
@@ -34,5 +34,8 @@ jobs:
         severity-cutoff: critical
         output-format: table          
 
-    - name: Run other tests
-      run: docker run steelscript.slim
+    - name: Run other tests optimized
+      run: docker run localbuild/steelscript.alpine:latest
+
+    - name: Run other tests slim
+      run: docker run localbuild/steelscript.slim:latest
