@@ -1,0 +1,52 @@
+# Dockerfile.alpine
+# version: 24.10.31
+
+# Use Python image alpine version
+FROM python:3.13-alpine
+LABEL org.opencontainers.image.authors="Riverbed Community"
+LABEL org.opencontainers.image.source="https://github.com/riverbed/steelscript"
+
+RUN set -ex && \
+        # Install tools and deps for build
+        tools=' \
+                bash \
+        ' && \
+        # Install deps for build
+        buildDeps=' \
+                git \
+                gcc \
+                libpcap-dev \
+                musl-dev \
+        ' && \
+        apk update && \ 
+        apk add --no-cache $buildDeps $tools && \
+        # Install SteelScript and modules
+        pip install --no-cache-dir --upgrade pip && \
+        pip install --no-cache-dir --src /src \
+        -e git+https://github.com/riverbed/steelscript#egg=steelscript \
+        -e git+https://github.com/riverbed/steelscript-netprofiler#egg=steelscript-netprofiler \
+        -e git+https://github.com/riverbed/steelscript-wireshark#egg=steelscript-wireshark \
+        -e git+https://github.com/riverbed/steelscript-cmdline#egg=steelscript-cmdline \
+        -e git+https://github.com/riverbed/steelscript-scc#egg=steelscript-scc \
+        -e git+https://github.com/riverbed/steelscript-appresponse#egg=steelscript-appresponse \
+        -e git+https://github.com/riverbed/steelscript-netim.git#egg=steelscript-netim \
+        -e git+https://github.com/riverbed/steelscript-client-accelerator-controller#egg=steelscript-cacontroller \            
+        -e git+https://github.com/riverbed/steelscript-steelhead#egg=steelscript-steelhead \
+        -e git+https://github.com/riverbed/steelscript-packets.git@master#egg=steelscript-packets && \
+        # Cleanup, purging build deps
+        apk del $buildDeps && \
+        apk cache clean
+
+# Create a non-root user and group
+ARG USERNAME=steelscript
+ARG GROUPNAME=$USERNAME
+ARG USER_ID=1000
+ARG GROUP_ID=$USER_ID
+RUN addgroup -g $GROUP_ID $GROUPNAME && adduser -u $USER_ID -G $GROUPNAME -h /home/$USERNAME -D $USERNAME
+
+# Create SteelScript workspace
+RUN set -ex && steel mkworkspace -d /home/steelscript/workspace        
+WORKDIR /home/steelscript/workspace
+
+# Configure container startup
+CMD ["/bin/bash"]

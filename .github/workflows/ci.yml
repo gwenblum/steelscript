@@ -12,7 +12,17 @@ jobs:
 
     - name: Docker Setup Buildx
       uses: docker/setup-buildx-action@v3
-  
+
+    - name: Build Docker image SteelScript alpine
+      run:  docker build --tag localbuild/steelscript.alpine:latest -f Dockerfile.slim .
+   
+    - name: Scan image SteelScript alpine
+      uses: anchore/scan-action@v3
+      with:
+        image: "localbuild/steelscript.alpine:latest"
+        severity-cutoff: critical
+        output-format: table
+
     - name: Build Docker image SteelScript SLIM
       run:  docker build --tag localbuild/steelscript.slim:latest -f Dockerfile.slim .
    
