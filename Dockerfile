@@ -49,7 +49,7 @@ RUN groupadd --gid $GROUP_ID $GROUPNAME && useradd --create-home --gid $GROUP_ID
 
 # Create SteelScript workspace
 RUN set -ex && steel mkworkspace -d /home/steelscript/workspace
-WORKDIR /root/steelscript/workspace
+WORKDIR /home/steelscript/workspace
 
 # Configure container startup
 CMD ["/bin/bash"]

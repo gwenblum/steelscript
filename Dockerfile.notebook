@@ -1,5 +1,5 @@
 # Dockerfile.notebook
-# version: 24.9.1
+# version: 24.10.31
 #
 # Usage
 #   
@@ -17,6 +17,6 @@ RUN set -ex \
         && pip install ipython jupyter
 
 EXPOSE 8888
-WORKDIR /root/steelscript-workspace
+WORKDIR /home/steelscript/workspace
 
 CMD ["/usr/local/bin/jupyter", "notebook", "--no-browser", "--allow-root", "--ip=0.0.0.0"]

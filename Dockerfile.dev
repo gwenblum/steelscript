@@ -38,9 +38,9 @@ RUN set -ex \
             -e /src-dev/steelscript-packets
 
 RUN set -ex \
-        && steel mkworkspace -d /root/steelscript-workspace
+        && steel mkworkspace -d /home/steelscript/workspace
 
-WORKDIR /root/steelscript-workspace
+WORKDIR /home/steelscript/workspace
 
 # Configure container startup
 CMD ["/bin/bash"]
