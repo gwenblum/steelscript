@@ -44,10 +44,10 @@ RUN set -ex && \
         -e git+https://github.com/riverbed/steelscript-cmdline#egg=steelscript-cmdline \
         -e git+https://github.com/riverbed/steelscript-scc#egg=steelscript-scc \
         -e git+https://github.com/riverbed/steelscript-appresponse#egg=steelscript-appresponse \
-        -e git+https://github.com/riverbed/steelscript-netim#egg=steelscript-netim \ \
+        -e git+https://github.com/riverbed/steelscript-netim#egg=steelscript-netim \
         -e git+https://github.com/riverbed/steelscript-client-accelerator-controller#egg=steelscript-client-accelerator-controller \
         -e git+https://github.com/riverbed/steelscript-steelhead#egg=steelscript-steelhead \
-        -e git+https://github.com/riverbed/steelscript-packets#egg=steelscript-packets && \
+        -e git+https://github.com/riverbed/steelscript-packets#egg=steelscript-packets 
 
 # Cleanup
 RUN set -ex && \           
