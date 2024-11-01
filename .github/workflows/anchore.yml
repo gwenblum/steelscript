@@ -14,15 +14,22 @@ jobs:
     - name: Docker Setup Buildx
       uses: docker/setup-buildx-action@v3
 
+
+
     - name: Build image - SteelScript workload (Dockerfile.workload)
       run:  docker build --tag localbuild/steelscript.workload:latest -f Dockerfile.workload .
    
     - name: Scan image - SteelScript workload
       uses: anchore/scan-action@v3
       with:
-        image: "localbuild/steelscript.alpine:latest"
+        image: "localbuild/steelscript.workload:latest"
         severity-cutoff: critical
         output-format: table
+
+    - name: Run sanity check - SteelScript workload
+      run: docker run localbuild/steelscript.workload:latest steel
+
+
 
     - name: Build image - SteelScript slim (Dockerfile.slim)
       run:  docker build --tag localbuild/steelscript.slim:latest -f Dockerfile.slim .
@@ -33,9 +40,6 @@ jobs:
         image: "localbuild/steelscript.slim:latest"
         severity-cutoff: critical
         output-format: table          
-
-    - name: Run sanity check - SteelScript workload
-      run: docker run localbuild/steelscript.workload:latest steel
 
     - name: Run sanity check - SteelScript slim
       run: docker run localbuild/steelscript.slim:latest steel
