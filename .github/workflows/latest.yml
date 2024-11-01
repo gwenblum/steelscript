@@ -70,3 +70,8 @@ jobs:
 
     - name: Run image - SteelScript slim
       run: docker run steelscript.slim:latest steel --version
+
+    # Extra
+
+    - name: Size images
+      run: docker images    

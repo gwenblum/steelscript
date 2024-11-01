@@ -30,3 +30,6 @@ jobs:
 
     - name: Run image - SteelScript release
       run: docker run localbuild/steelscript.release steel --version
+
+    - name: Size image
+      run: docker images
