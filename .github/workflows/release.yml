@@ -1,3 +1,6 @@
+# release.yml
+# version: 24.11.1
+
 name: release
 # see extra configuration rule in /.grype.yaml
 
