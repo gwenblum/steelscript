@@ -1,4 +1,4 @@
-# Dockerfile.playground
+# Dockerfile
 # version: 24.11.1
 #
 # Usage
@@ -34,20 +34,20 @@ RUN set -ex && \
         apt-get install -y $tools $buildDeps --no-install-recommends && \
         rm -rf /var/lib/apt/lists/*
 
-# Install SteelScript and modules        
+# Install SteelScript and modules, latest versions 
 RUN set -ex && \
         pip install --no-cache-dir --upgrade pip && \
         pip install --no-cache-dir --src /src \
-        -e git+https://github.com/riverbed/steelscript#egg=steelscript \
-        -e git+https://github.com/riverbed/steelscript-netprofiler#egg=steelscript-netprofiler \
-        -e git+https://github.com/riverbed/steelscript-wireshark#egg=steelscript-wireshark \
-        -e git+https://github.com/riverbed/steelscript-cmdline#egg=steelscript-cmdline \
-        -e git+https://github.com/riverbed/steelscript-scc#egg=steelscript-scc \
-        -e git+https://github.com/riverbed/steelscript-appresponse#egg=steelscript-appresponse \
-        -e git+https://github.com/riverbed/steelscript-netim.git#egg=steelscript-netim \
-        -e git+https://github.com/riverbed/steelscript-client-accelerator-controller#egg=steelscript-cacontroller \
-        -e git+https://github.com/riverbed/steelscript-steelhead#egg=steelscript-steelhead \
-        -e git+https://github.com/riverbed/steelscript-packets.git@master#egg=steelscript-packets && \
+        -e git+https://github.com/riverbed/steelscript \
+        -e git+https://github.com/riverbed/steelscript-netprofiler \
+        -e git+https://github.com/riverbed/steelscript-wireshark \
+        -e git+https://github.com/riverbed/steelscript-cmdline \
+        -e git+https://github.com/riverbed/steelscript-scc \
+        -e git+https://github.com/riverbed/steelscript-appresponse \
+        -e git+https://github.com/riverbed/steelscript-netim \
+        -e git+https://github.com/riverbed/steelscript-client-accelerator-controller \
+        -e git+https://github.com/riverbed/steelscript-steelhead \
+        -e git+https://github.com/riverbed/steelscript-packets && \
 
 # Cleanup
 RUN set -ex && \           
