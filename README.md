@@ -256,17 +256,18 @@ Execute test-plans with tox
 
 Some Dockerfile are provided to build different flavors of the SteelScript container image:
 
-- Dockerfile: script practice build, with all CLI. 
-- Dockerfile.notebook: build for demo and learning with Notebooks.
-- Dockerfile.slim: small build just enough to run steelscript. Should pass security scans.
-- Dockerfile.alpine: optimized build, ideal to use as a base image for custom workloads. Should pass security scans.
-- Dockerfile.dev: build development and testing container from master or fork/branch
+1. Dockerfile: scripting playground, with all CLI and tools. 
+2. Dockerfile.notebook: build for demo and learning with Jupyter Notebooks.
+3. Dockerfile.slim: small build just enough to run steelscript. Should pass security scans.
+4. Dockerfile.workload: optimized to use as a base image for custom workloads. Should pass security scans.
+5. Dockerfile.custom: example of a custom workload (based on Dockerfile.workload).
+6. Dockerfile.dev: build development and testing container from master or fork/branch
 
 
 <details>
   <summary>Build snippets</summary>
 
-##### Scripts Practice (~1.1 GB)
+##### Playground (~1.1 GB)
 
 ```shell
   docker build --tag steelscript -f Dockerfile .
@@ -284,11 +285,27 @@ Some Dockerfile are provided to build different flavors of the SteelScript conta
   docker build --tag steelscript.slim -f Dockerfile.slim .
 ```  
 
-##### Optimized (<180 MB)
+##### Workload (<180 MB)
 
 ```shell
-  docker build --tag steelscript.alpine -f Dockerfile.alpine .
-```  
+  docker build --tag steelscript.workload -f Dockerfile.workload .
+```
+
+##### Custom workload
+
+```shell
+#   # Build the SteelScript Optimized image
+docker build --tag steelscript.workload:latest -f Dockerfile.workload .
+
+# Create and edit your script
+touch your_script.py
+
+# Build your custom image
+docker build --tag steelscript.your_custom_workload -f Dockerfile.custom .
+
+# Run the workload
+docker run --rm steelscript.your_custom_workload:latest python your_script.py
+``` 
 
 
 </details>

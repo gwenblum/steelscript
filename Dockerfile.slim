@@ -1,10 +1,22 @@
 # Dockerfile.slim
-# version: 24.10.31
+# version: 24.11.1
+#
+# Usage
+#   
+#   # Build
+#
+#       docker build --tag steelscript.slim:latest -f Dockerfile.slim .
+#
+#   # Run
+#       
+#      docker run --rm steelscript.slim:latest steel
 
-# Use Python image slim version
+# Use a slim image
 FROM python:3.13-slim
 LABEL org.opencontainers.image.authors="Riverbed Community"
 LABEL org.opencontainers.image.source="https://github.com/riverbed/steelscript"
+LABEL org.opencontainers.image.title="SteelScript - slim image"
+LABEL org.opencontainers.image.version="24.11.1"
 
 RUN set -ex && \
         # Install deps for build
@@ -41,15 +53,14 @@ RUN set -ex && \
         rm -rf ~/.cache
 
 # Create a non-root user and group
-ARG USERNAME=steelscript
-ARG GROUPNAME=$USERNAME
 ARG USER_ID=1000
 ARG GROUP_ID=$USER_ID
-RUN groupadd --gid $GROUP_ID $GROUPNAME && useradd --create-home --gid $GROUP_ID --uid $USER_ID $USERNAME
+RUN groupadd --gid $GROUP_ID steelscript && useradd --create-home --home-dir /steelscript --gid $GROUP_ID --uid $USER_ID steelscript
+USER steelscript
 
 # Create SteelScript workspace
-RUN set -ex && steel mkworkspace -d /home/steelscript/workspace        
-WORKDIR /home/steelscript/workspace
+RUN set -ex && steel mkworkspace -d /steelscript/workspace
+WORKDIR /steelscript/workspace
 
 # Configure container startup
 CMD ["/bin/bash"]

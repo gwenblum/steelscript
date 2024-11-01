@@ -1,15 +1,30 @@
-# Dockerfile
-# version: 24.10.31
+# Dockerfile.playground
+# version: 24.11.1
+#
+# Usage
+#   
+#   # Build
+#
+#       docker build --tag steelscript:latest -f Dockerfile .
+#
+#   # Run
+#
+#       docker run -it --rm steelscript:latest
+#
 
-# Use Python iamge full version
+# Use Python image for playground
 FROM python:3.13
 LABEL org.opencontainers.image.authors="Riverbed Community"
 LABEL org.opencontainers.image.source="https://github.com/riverbed/steelscript"
+LABEL org.opencontainers.image.title="SteelScript - playground image"
+LABEL org.opencontainers.image.version="24.11.1"
 
+# Install tools and deps for build
 RUN set -ex && \
-        # Install tools and deps for build
         tools=' \
                 git \
+                nano \
+                vim \
         ' && \
         buildDeps=' \
                 libpcap-dev \
@@ -17,8 +32,10 @@ RUN set -ex && \
         apt-get update && \ 
         apt-get upgrade -y && \ 
         apt-get install -y $tools $buildDeps --no-install-recommends && \
-        rm -rf /var/lib/apt/lists/* && \
-        # Install SteelScript and modules        
+        rm -rf /var/lib/apt/lists/*
+
+# Install SteelScript and modules        
+RUN set -ex && \
         pip install --no-cache-dir --upgrade pip && \
         pip install --no-cache-dir --src /src \
         -e git+https://github.com/riverbed/steelscript#egg=steelscript \
@@ -31,25 +48,16 @@ RUN set -ex && \
         -e git+https://github.com/riverbed/steelscript-client-accelerator-controller#egg=steelscript-cacontroller \
         -e git+https://github.com/riverbed/steelscript-steelhead#egg=steelscript-steelhead \
         -e git+https://github.com/riverbed/steelscript-packets.git@master#egg=steelscript-packets && \
-        # Cleanup, purging build deps
-        distroExtra=' \
-                gcc \
-        ' && \                
-        apt-get remove -y --purge --autoremove $buildDeps $distroExtra && \
+
+# Cleanup
+RUN set -ex && \           
         apt-get autoremove && \
         apt-get clean && \
         rm -rf ~/.cache
 
-# Create a non-root user and group
-ARG USERNAME=steelscript
-ARG GROUPNAME=$USERNAME
-ARG USER_ID=1000
-ARG GROUP_ID=$USER_ID
-RUN groupadd --gid $GROUP_ID $GROUPNAME && useradd --create-home --gid $GROUP_ID --uid $USER_ID $USERNAME
-
 # Create SteelScript workspace
-RUN set -ex && steel mkworkspace -d /home/steelscript/workspace
-WORKDIR /home/steelscript/workspace
+RUN set -ex && steel mkworkspace -d /steelscript/workspace
+WORKDIR /steelscript/workspace
 
 # Configure container startup
 CMD ["/bin/bash"]

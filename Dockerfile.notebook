@@ -1,22 +1,25 @@
 # Dockerfile.notebook
-# version: 24.10.31
+# version: 24.11.1
 #
 # Usage
 #   
 #   # Build
-#   docker build --tag steelscript.notebook -f Dockerfile.notebook .
+#
+#       docker build --tag steelscript.notebook -f Dockerfile.notebook .
 # 
 #   # Run with --init (tini)
-#   docker run --init --rm -p 8888:8888 --name=steelscript.notebook steelscript.notebook
+#
+#       docker run --init --rm -p 8888:8888 --name=steelscript.notebook steelscript.notebook
 
 FROM steelscript:latest
 LABEL org.opencontainers.image.authors="Riverbed Community"
 LABEL org.opencontainers.image.source="https://github.com/riverbed/steelscript"
+LABEL org.opencontainers.image.title="SteelScript - notebook playground image"
+LABEL org.opencontainers.image.version="24.11.1"
 
 RUN set -ex \
         && pip install ipython jupyter
 
 EXPOSE 8888
-WORKDIR /home/steelscript/workspace
 
 CMD ["/usr/local/bin/jupyter", "notebook", "--no-browser", "--allow-root", "--ip=0.0.0.0"]

@@ -1,15 +1,22 @@
-# Dockerfile.alpine
-# version: 24.10.31
+# Dockerfile.workload
+# version: 24.11.1
 #
 # Usage
 #   
 #   # Build
-#   docker build --tag steelscript.alpine:latest -f Dockerfile.alpine .
+#
+#       docker build --tag steelscript.workload:latest -f Dockerfile.workload .
+#
+#   # Run
+#       
+#      docker run --rm steelscript.workload:latest steel
 
-# Use Python image alpine version
+# Use an alpine version for optimization
 FROM python:3.13-alpine
 LABEL org.opencontainers.image.authors="Riverbed Community"
 LABEL org.opencontainers.image.source="https://github.com/riverbed/steelscript"
+LABEL org.opencontainers.image.title="SteelScript - workload image"
+LABEL org.opencontainers.image.version="24.11.1"
 
 RUN set -ex && \
         # Install tools and deps for build
@@ -42,16 +49,14 @@ RUN set -ex && \
         apk del $buildDeps && \
         apk cache clean
 
-# Create a non-root user and group
-ARG USERNAME=steelscript
-ARG GROUPNAME=$USERNAME
+# Create a non-root user and group for steelscript
 ARG USER_ID=1000
 ARG GROUP_ID=$USER_ID
-RUN addgroup -g $GROUP_ID $GROUPNAME && adduser -u $USER_ID -G $GROUPNAME -h /home/$USERNAME -D $USERNAME
+RUN addgroup -g $GROUP_ID steelscript && adduser -u $USER_ID -G steelscript -h /steelscript -D steelscript
+USER steelscript
 
-# Create SteelScript workspace
-RUN set -ex && steel mkworkspace -d /home/steelscript/workspace        
-WORKDIR /home/steelscript/workspace
+# Set the steelscript workdir
+WORKDIR /steelscript
 
 # Configure container startup
 CMD ["/bin/bash"]
