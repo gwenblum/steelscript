@@ -29,7 +29,7 @@ jobs:
         output-format: table
 
     - name: Run image - SteelScript release
-      run: docker run localbuild/steelscript.release steel --version
+      run: docker run localbuild/steelscript.release steel about -v
 
     - name: Size image
       run: docker images
