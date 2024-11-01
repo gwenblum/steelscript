@@ -38,13 +38,14 @@ RUN set -ex && \
 RUN set -ex && \
         pip install --no-cache-dir --upgrade pip && \
         pip install --no-cache-dir --src /src \
-        -e git+https://github.com/riverbed/steelscript \
+        -e git+https://github.com/riverbed/steelscript#egg=steelscript \
         -e git+https://github.com/riverbed/steelscript-netprofiler \
         -e git+https://github.com/riverbed/steelscript-wireshark \
         -e git+https://github.com/riverbed/steelscript-cmdline \
         -e git+https://github.com/riverbed/steelscript-scc \
         -e git+https://github.com/riverbed/steelscript-appresponse \
-        -e git+https://github.com/riverbed/steelscript-netim \
+        # TODO: remove "-e" and "#egg=steelscript-netim" patches when steelscript-netim is fixed (https://github.com/riverbed/steelscript-netim/pull/10)
+        -e git+https://github.com/riverbed/steelscript-netim#egg=steelscript-netim \ \
         -e git+https://github.com/riverbed/steelscript-client-accelerator-controller \
         -e git+https://github.com/riverbed/steelscript-steelhead \
         -e git+https://github.com/riverbed/steelscript-packets && \

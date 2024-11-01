@@ -308,6 +308,12 @@ docker build --tag steelscript.your_custom_workload -f Dockerfile.custom .
 docker run --rm steelscript.your_custom_workload:latest python your_script.py
 ``` 
 
+##### Release (<180 MB)
+
+```shell
+  docker build --tag steelscript.release -f Dockerfile.release .
+```
+
 
 </details>
 
