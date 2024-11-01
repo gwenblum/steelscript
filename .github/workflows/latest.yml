@@ -17,37 +17,45 @@ jobs:
     # Playground
 
     - name: Build image - SteelScript playground (Dockerfile)
-      run:  docker build --tag localbuild/steelscript:latest -f Dockerfile .
+      run:  docker build --tag steelscript:latest -f Dockerfile .
 
     - name: Run - SteelScript playground
-      run: docker run localbuild/steelscript:latest steel
+      run: docker run steelscript:latest steel
+
+    # Notebook
+
+    - name: Build image - SteelScript notebook (Dockerfile)
+      run:  docker build --tag steelscript.notebook -f Dockerfile.notebook .
+
+    - name: Run - SteelScript notebook
+      run: docker run steelscript:latest steel      
 
     # Workload
 
     - name: Build image - SteelScript workload (Dockerfile.workload)
-      run:  docker build --progress=plain --tag localbuild/steelscript.workload:latest -f Dockerfile.workload .
+      run:  docker build --tag steelscript.workload:latest -f Dockerfile.workload .
    
     - name: Scan image - SteelScript workload
       uses: anchore/scan-action@v3
       with:
-        image: "localbuild/steelscript.workload:latest"
+        image: "steelscript.workload:latest"
         severity-cutoff: critical
         output-format: table
 
     - name: Run image - SteelScript workload
-      run: docker run localbuild/steelscript.workload:latest steel
+      run: docker run steelscript.workload:latest steel
 
     # Slim
 
     - name: Build image - SteelScript slim (Dockerfile.slim)
-      run:  docker build --tag localbuild/steelscript.slim:latest -f Dockerfile.slim .
+      run:  docker build --tag steelscript.slim:latest -f Dockerfile.slim .
    
     - name: Scan image - SteelScript slim
       uses: anchore/scan-action@v3
       with:
-        image: "localbuild/steelscript.slim:latest"
+        image: "steelscript.slim:latest"
         severity-cutoff: critical
         output-format: table          
 
     - name: Run image - SteelScript slim
-      run: docker run localbuild/steelscript.slim:latest steel
+      run: docker run steelscript.slim:latest steel
