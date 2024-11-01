@@ -26,4 +26,4 @@ jobs:
         output-format: table
 
     - name: Run image - SteelScript release
-      run: docker run localbuild/steelscript.release steel
+      run: docker run localbuild/steelscript.release steel --version

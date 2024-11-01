@@ -20,7 +20,7 @@ jobs:
       run:  docker build --tag steelscript:latest -f Dockerfile .
 
     - name: Run - SteelScript playground
-      run: docker run steelscript:latest steel
+      run: docker run steelscript:latest steel --version
 
     # Notebook
 
@@ -28,7 +28,7 @@ jobs:
       run:  docker build --tag steelscript.notebook -f Dockerfile.notebook .
 
     - name: Run - SteelScript notebook
-      run: docker run steelscript:latest steel      
+      run: docker run steelscript:latest steel --version      
 
     # Workload
 
@@ -43,7 +43,15 @@ jobs:
         output-format: table
 
     - name: Run image - SteelScript workload
-      run: docker run steelscript.workload:latest steel
+      run: docker run steelscript.workload:latest steel --version
+
+    # Custom
+
+    - name: Build image - SteelScript custom (Dockerfile.custom)
+      run:  docker build --tag steelscript.custom:latest -f Dockerfile.custom .
+   
+    - name: Run image - SteelScript custom
+      run: docker run steelscript.custom:latest steel --version
 
     # Slim
 
@@ -58,4 +66,4 @@ jobs:
         output-format: table          
 
     - name: Run image - SteelScript slim
-      run: docker run steelscript.slim:latest steel
+      run: docker run steelscript.slim:latest steel --version
