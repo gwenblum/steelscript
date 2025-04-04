@@ -73,7 +73,6 @@ id    name                   active    definition
 4     Default-192.168.x.x    True      ['192.168.0.0-192.168.255.255']    
 ```
 
-
 ## Test - Nov. 2020 - OK
 
 ### Goal
